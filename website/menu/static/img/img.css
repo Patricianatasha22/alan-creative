@@ -4,15 +4,23 @@ body {
 
 img {
   display: block;
-  width: 75%;
-  height: auto;
+  max-width: 200px;
+  max-height: 200px;
 }
 
-.container,
+/* .container,
 .col {
   border: 1px solid;
-}
+} */
 
 #rincian, #menu{
-  background-color:aqua;
+  background-color:#e7eaed;
+  height: 100%;
+}
+
+figure { display: table; }
+
+figcaption{
+  background-color: white;
+  margin: auto;
 }

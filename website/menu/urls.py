@@ -1,7 +1,9 @@
 from django.urls import path
-from menu.controllers import checkoutController
+from menu.controllers import menuController, tambahMakananController, hapusMakananController
 
 urlpatterns = [
-    path('', checkoutController.checkoutPage, name = 'checkoutPage'),
-    path('save/', checkoutController.savePage, name = 'savePage')
+    path('', menuController.menuPage, name = 'menu'),
+    path('save/', menuController.savePage, name = 'savePage'),
+    path('tambahMakanan/', tambahMakananController.tambahMakanan, name = 'tambahMakanan'),
+    path('hapusMakanan/', hapusMakananController.hapusMakanan, name = 'hapusMakanan')
 ]
