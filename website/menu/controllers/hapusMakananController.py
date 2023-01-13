@@ -4,6 +4,14 @@ from django.template import loader
 from menu.models import Makanan
 
 def hapusMakanan(request):
-    makanans = Makanan.getAllMakanan()
-    content = {"makanans":makanans}
+    if request.method == 'POST':
+        makanans = request.POST.getlist('hapusMakananList')
+        for makanan in makanans:
+            Makanan.deleteMakanan(makanan)
+
+        return redirect('menu')
+    else:
+        makanans = Makanan.getAllMakanan()
+        content = {"makanans":makanans}
+
     return render(request, "hapusMakanan.html", content)

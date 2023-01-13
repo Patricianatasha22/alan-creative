@@ -34,21 +34,22 @@
       <div id="form" style="margin-left: 12rem; margin-right: 12rem; margin-top: 50px;">
       <a href="{% url 'menu' %}">kembali ke menu</a>
       <h1>Hapus Makanan</h1>
-        <form method="POST">
+      Centang makanan yang mau dihapus
+        <form actions ="../hapusMakanan/" method="POST">
+          {% csrf_token %}  
             <table class="table table-bordered text-center mx-auto">
               {% for makanan in makanans %}
               {% if forloop.counter0|divisibleby:4 %}
                   </tr><tr>
               {% endif %}
               <td>  
-                <input class="form-check-input mt-0" type="checkbox" value="">
+                <input class="form-check-input mt-0" type="checkbox" value="{{makanan.id}}" name="hapusMakananList">
                 <figure>
-                  <a href="{% url 'savePage' %}"
-                    ><img
+                    <img
                       src="../media/{{makanan.gambar.path}}"
                       class="img-thumbnail rounded mx-auto d-block"
                       alt="nothing"
-                  /></a>
+                  />
                   <figcaption>{{makanan.nama}}</figcaption>
                 </figure></td>
           {% endfor %}

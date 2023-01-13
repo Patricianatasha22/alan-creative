@@ -35,7 +35,7 @@
               {% endif %}
               <td>  
                 <figure>
-                  <a href="{% url 'savePage' %}"
+                  <a href="pesan/{{makanan.id}}"
                     ><img
                       src="../media/{{makanan.gambar.path}}"
                       class="img-thumbnail rounded mx-auto d-block"
@@ -98,29 +98,19 @@
                     </div>
                 </div>
                 <!-- LOOP MAKANAN -->
-                       <div class="row">
-                    <div class="col">
-                    Cah Taoge
-                    </div>
-                    <div class="col-2 text-end">
-                    x2
-                    </div>
-                    <div class="col-4 text-end">
-                    Rp 15.000
-                    </div>
-                </div>
+                {% for pesanan in pesanans %}
                 <div class="row">
                     <div class="col">
-                    Cah Taoge
+                    {{ pesanan.makanan.nama }}
                     </div>
                     <div class="col-2 text-end">
-                    x2
+                    x{{ pesanan.jumlah }}
                     </div>
                     <div class="col-4 text-end">
-                    Rp 15.000
+                    Rp {{ pesanan.makanan.harga }}
                     </div>
                 </div>
-
+                {% endfor %}
                 <!-- SUB TOTAL DAN TOTAL -->
                 <div class="row">
                     <div class="col">
@@ -143,7 +133,7 @@
             </div>
             <!-- CLEAR SALE -->
             <div class="container mt-4">
-                 <a href = "#">
+                 <a href = "{% url 'clearSale' %}">
               <button class="btn btn-light w-100">Clear Sale</button>
           </a>
             </div>
