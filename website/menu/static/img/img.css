@@ -1,0 +1,18 @@
+body {
+  font-family: "Lato", sans-serif;
+}
+
+img {
+  display: block;
+  width: 75%;
+  height: auto;
+}
+
+.container,
+.col {
+  border: 1px solid;
+}
+
+#rincian, #menu{
+  background-color:aqua;
+}
