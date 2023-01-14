@@ -7,7 +7,7 @@ class Makanan(models.Model):
         db_table = 'makanan'
 
     nama = models.CharField(max_length=50, default=None)
-    harga = models.CharField(max_length=50, default=None)
+    harga = models.IntegerField(max_length=50, default=None)
     gambar = models.ImageField(upload_to='static/img/', default=None)
 
     def getAllMakanan():
@@ -41,6 +41,10 @@ class Pesanan(models.Model):
 
         return True
     
+    @property
+    def totalHarga(self):
+        return self.makanan.harga * self.jumlah
+        
     def getAllMakananUnik():
         return list(Pesanan.objects.all().values_list('makanan', flat=True)) 
     
@@ -63,6 +67,14 @@ class Pesanan(models.Model):
     def clearSale():
         pesanan = Pesanan.objects.all().delete()
         return True
+    
+    def getTotal():
+        pesanans = Pesanan.getAllPesanan()
+        total = 0
+        for pesanan in pesanans:
+            total += pesanan.totalHarga
+        
+        return total
 
     
 

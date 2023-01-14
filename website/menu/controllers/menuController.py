@@ -6,8 +6,9 @@ from menu.models import Makanan, Pesanan
 def menuPage(request):
     makanans = Makanan.getAllMakanan()
     pesanans = Pesanan.getAllPesanan()
+    total = Pesanan.getTotal()
 
-    content = {"makanans":makanans , "pesanans": pesanans}
+    content = {"makanans":makanans , "pesanans": pesanans, "total": total}
     return render(request, "menu.html", content)
 
 def savePage(request):
@@ -28,3 +29,7 @@ def pesan(request, id):
 def clearSale(request):
     Pesanan.clearSale()
     return redirect('menu')
+
+def hitung(request):
+    uangPembeli = request.POST['uangPembeli']
+    return 1

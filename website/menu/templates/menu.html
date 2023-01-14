@@ -1,5 +1,7 @@
 <!-- CSS -->
 {% load static %}
+{% load humanize%}
+{% load l10n %}
 <link href="{% static 'img/img.css' %}" rel="stylesheet" />
 
 <!DOCTYPE html>
@@ -19,10 +21,13 @@
       integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
       crossorigin="anonymous"
     />
+    
   </head>
+
   <body>
-    <a href="{% url 'tambahMakanan' %}">tambah makanan</a>
-    <a href="{% url 'hapusMakanan' %}">hapus makanan</a>
+    <a href="{% url 'tambahMakanan' %}">Tambah Menu</a>
+    <a href="{% url 'hapusMakanan' %}">Hapus Menu</a>
+    <a href="{% url 'pilihMakanan' %}">Edit Menu</a>
 
     <!-- MENU -->
     <div class="container-fluid" id="menu">
@@ -39,7 +44,7 @@
                     ><img
                       src="../media/{{makanan.gambar.path}}"
                       class="img-thumbnail rounded mx-auto d-block"
-                      alt="nothing"
+                      alt="makanan"
                   /></a>
                   <figcaption>{{makanan.nama}}</figcaption>
                 </figure></td>
@@ -81,12 +86,8 @@
                     </div>
                   </div>
                 </div>  
-
-
-            <br>
+            <!-- INVOICE LINES -->
             <div class="container">
-               
-
                    <div class="card">
                     <div class="card-body py-0">
                        <div class="row">
@@ -100,24 +101,36 @@
                 <!-- LOOP MAKANAN -->
                 {% for pesanan in pesanans %}
                 <div class="row">
+
+                    <!--NAMA MAKANAN  -->
                     <div class="col">
                     {{ pesanan.makanan.nama }}
                     </div>
+
+                    <!-- JUMLAH -->
+                    {% if pesanan.jumlah == 1 %}
+                    <div class="col-2 text-end"></div>
+                    {% else %}
                     <div class="col-2 text-end">
                     x{{ pesanan.jumlah }}
                     </div>
+                    {% endif %}
+
+                    <!-- TOTAL HARGA -->
                     <div class="col-4 text-end">
-                    Rp {{ pesanan.makanan.harga }}
+                    Rp {{ pesanan.totalHarga }}
                     </div>
+
                 </div>
                 {% endfor %}
+
                 <!-- SUB TOTAL DAN TOTAL -->
                 <div class="row">
                     <div class="col">
                     Sub-Total
                     </div>
                     <div class="col-4 text-end">
-                     Rp 15.000
+                     Rp {{ total }}
                     </div>
                 </div>
                 <div class="row">
@@ -125,42 +138,117 @@
                     Total
                     </div>
                     <div class="col-4 text-end">
-                      Rp 15.000
+                      Rp {{ total }}
                     </div>
                 </div>
                     </div>
                   </div>
             </div>
+
             <!-- CLEAR SALE -->
-            <div class="container mt-4">
+            <div class="container">
                  <a href = "{% url 'clearSale' %}">
               <button class="btn btn-light w-100">Clear Sale</button>
           </a>
-            </div>
+          <div class="card">
+                    <div class="card-body py-0 my-0">
+                      <div class="row">
+                        <div class="col">
+                          <br>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+               
+
+        
 
             <!-- SAVE BILL DAN PRINT BILL -->
             <div class="container mt-3">
+
                  <div class="row">
                     <div class="col">
-                    <a href = "#">
-              <button class="btn btn-secondary w-100">Save Bill</button>
-          </a>
+                      <!-- Save Bill Modal -->
+                      <button type="button" class="btn btn-secondary w-100" data-bs-toggle="modal" data-bs-target="#saveBill">
+                        Save Bill
+                      </button>
                     </div>
                     <div class="col">
-                     <a href = "#">
-              <button class="btn btn-secondary w-100">Print Bill</button>
-          </a>
+                      <a href = "#">
+                        <button class="btn btn-secondary w-100">Print Bill</button>
+                      </a>
                     </div>
                 </div>
-                <div class="row mt-1">
-                    <div class="col">
-                    <a href = "#">
-              <button class="btn btn-secondary w-100">Charge</button>
-          </a>
+
+                <div class="card mt-1" style="background-color: #495DA7;">
+                  <div class="card-body">
+                    <div class="row m-0 p-0 border">
+                      <div class="col-2 border">
+                        <img
+                      src="../media/static/img/logo.webp"
+                      class="img-thumbnail mx-auto"
+                      style="width:75%; height: auto;"
+                  />
+                      </div>
+                      <div class="col">
+                        <!-- Charge Modal -->
+                      <button type="button" class="btn w-100" data-bs-toggle="modal" data-bs-target="#charge" style="color:white;">
+                        Charge Rp {{ total }}
+                      </button>
+                      </div>
                     </div>
-  
+
+                  </div>
                 </div>
+
             </div>
+
     </div>
+
+
+<!-- Save Bill Modal -->
+<div class="modal fade" id="saveBill" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Charge Modal -->
+<div class="modal fade" id="charge" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Total Charge</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Total: {{ total }}
+      <form action ="hitung" method="POST">
+       <label class="form-label" for="uangPembeli" style="font-weight: bold; font-size: large;">Uang Pembeli</label>
+                              <input type="text" name="uangPembeli" id="uangPembeli" class="form-control" placeholder="Input jumlah uang" aria-label="username" aria-describedby="basic-addon1" value="">
+                              <input class="btn btn-secondary mt-1" type="submit" style = "height:40px;" value="Hitung Kembalian"/>
+
+      </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
   </body>
 </html>

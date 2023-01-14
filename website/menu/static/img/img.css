@@ -1,17 +1,8 @@
+@import "bootstrap";
+
 body {
   font-family: "Lato", sans-serif;
 }
-
-img {
-  display: block;
-  max-width: 200px;
-  max-height: 200px;
-}
-
-/* .container,
-.col {
-  border: 1px solid;
-} */
 
 #rincian, #menu{
   background-color:#e7eaed;
