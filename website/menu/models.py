@@ -7,7 +7,7 @@ class Makanan(models.Model):
         db_table = 'makanan'
 
     nama = models.CharField(max_length=50, default=None)
-    harga = models.IntegerField(max_length=50, default=None)
+    harga = models.IntegerField(default=None)
     gambar = models.ImageField(upload_to='static/img/', default=None)
 
     def getAllMakanan():

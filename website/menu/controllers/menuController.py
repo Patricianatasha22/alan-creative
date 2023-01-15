@@ -2,13 +2,30 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import loader
 from menu.models import Makanan, Pesanan
+from menu.forms import hitungKembalianForm
 
 def menuPage(request):
     makanans = Makanan.getAllMakanan()
     pesanans = Pesanan.getAllPesanan()
     total = Pesanan.getTotal()
 
-    content = {"makanans":makanans , "pesanans": pesanans, "total": total}
+    #hitung Kembalian Modal
+    if request.method == 'POST':
+        print("hello")
+        form = hitungKembalianForm(request.POST)
+        if form.is_valid():
+            totalCharge = form.cleaned_data.get('Total_Charge')
+            uangPembeli = form.cleaned_data.get('Uang_Pembeli')
+
+            uangKembalian = totalCharge - uangPembeli
+
+            content = {"makanans":makanans , "pesanans": pesanans, "total": total, "uangKembalian": uangKembalian}
+            return render(request, "menu.html", content)
+    else:
+        form = hitungKembalianForm(initial={'Total_Charge': total})
+
+    content = {"makanans":makanans , "pesanans": pesanans, "total": total, "form": form}
+    
     return render(request, "menu.html", content)
 
 def savePage(request):
@@ -29,7 +46,3 @@ def pesan(request, id):
 def clearSale(request):
     Pesanan.clearSale()
     return redirect('menu')
-
-def hitung(request):
-    uangPembeli = request.POST['uangPembeli']
-    return 1

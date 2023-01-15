@@ -10,3 +10,7 @@ class tambahMakananForm(forms.ModelForm):
         model = Makanan 
         # It includes all the fields of model  
         fields = '__all__'  
+
+class hitungKembalianForm(forms.Form):
+    Total_Charge = forms.IntegerField()
+    Uang_Pembeli = forms.IntegerField()
