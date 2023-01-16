@@ -22,8 +22,11 @@ Penjelasan functions:
 5. Klik makanan 2x --> akan muncul di dalam bill dengan tulisan jumlah x2
 6. Clear Sale --> Untuk menghapus semua riwayat makanan yang telah di klik
 7. Save Bill --> Untuk menyimpan bill dengan cara dikirim ke email
-8. Print Bill --> Untuk menyimpan Bill dalam bentuk pdf untuk di print
-9. Charge --> Membuka pop up yang dapat mengkalkulasi uang kembalian sesuai input uang pembeli
+contoh:
+![image](https://user-images.githubusercontent.com/70936744/212592751-e9ad6ed9-9cea-4283-ab65-c6c3a50950dd.png)
+
+9. Print Bill --> Untuk menyimpan Bill dalam bentuk pdf untuk di print
+10. Charge --> Membuka pop up yang dapat mengkalkulasi uang kembalian sesuai input uang pembeli
 
 
 
