@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <!-- CSS -->
     {% load static %}
     <link href="{% static 'img/img.css' %}" rel="stylesheet" />
@@ -18,7 +19,10 @@
       integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
       crossorigin="anonymous"
     />
-    
+    <!-- font style -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
   </head>
 
   <body>
@@ -32,27 +36,28 @@
         <div class="col-lg-8">
           <table class="table table-bordered text-center mx-auto">
               {% for makanan in makanans %}
-              {% if forloop.counter0|divisibleby:4 %}
-                  </tr><tr>
-              {% endif %}
-              <td>  
-                <figure class="figure">
-                  <a href="pesan/{{makanan.id}}"
-                    ><img
-                      src="../media/{{makanan.gambar.path}}"
-                      class="figure-img img-fluid rounded"
-                      alt="makanan"
-                  /></a>
-                  <figcaption class="figure-caption mt-0">{{makanan.nama}}</figcaption>
-                </figure></td>
-          {% endfor %}
-          </tr>
+                {% if forloop.counter0|divisibleby:4 %}
+                    </tr><tr>
+                {% endif %}
+                <td>  
+                  <figure class="figure">
+                    <a href="pesan/{{makanan.id}}"
+                      ><img
+                        src="../media/{{makanan.gambar.path}}"
+                        class="figure-img img-fluid rounded"
+                        alt="makanan"
+                    /></a>
+                    <figcaption class="figure-caption mt-0">{{makanan.nama}}</figcaption>
+                  </figure></td>
+              {% endfor %}
+            </tr>
           </table>
         </div>
 
         <!-- INVOICE -->
         <div class="col-lg-4" id="rincian">
             <div class="container mt-5">
+
                 <!-- HEADER -->
                 <div class="row">
                     <div class="col-2">
@@ -83,21 +88,22 @@
                     </div>
                   </div>
                 </div>  
+
             <!-- INVOICE LINES -->
             <div class="container">
                    <div class="card">
                     <div class="card-body py-0">
                        <div class="row">
-                    <div class="col">
-                    1
+                    <div class="col" >
+                    <p class = "my-0" style="color:blue;">1</p>
                     </div>
                     <div class="col text-end">
-                    ViewTable
+                     <p class = "my-0" style="color:blue;">ViewTable</p>
                     </div>
                 </div>
                 <!-- LOOP MAKANAN -->
                 {% for pesanan in pesanans %}
-                <div class="row">
+                <div class="row" id ="printable">
 
                     <!--NAMA MAKANAN  -->
                     <div class="col">
@@ -144,62 +150,59 @@
 
             <!-- CLEAR SALE -->
             <div class="container">
-                 <a href = "{% url 'clearSale' %}">
-              <button class="btn btn-light w-100">Clear Sale</button>
-          </a>
-          <div class="card">
-                    <div class="card-body py-0 my-0">
-                      <div class="row">
-                        <div class="col">
-                          <br>
-                        </div>
-                      </div>
-                    </div>
+              <a href = "{% url 'clearSale' %}">
+                <button class="btn btn-light w-100">Clear Sale</button>
+              </a>
+            
+            <!-- EMPTY CARD -->
+            <div class="card">
+              <div class="card-body py-0 my-0">
+                <div class="row">
+                  <div class="col">
+                    <br>
                   </div>
+                </div>
+              </div>
+            </div>
                
-
-        
-
             <!-- SAVE BILL DAN PRINT BILL -->
             <div class="container mt-3">
 
-                 <div class="row">
-                    <div class="col">
-                      <!-- Save Bill Modal -->
-                      <button type="button" class="btn btn-secondary w-100" data-bs-toggle="modal" data-bs-target="#saveBill">
-                        Save Bill
-                      </button>
-                    </div>
-                    <div class="col">
-                      <a href = "#">
-                        <button class="btn btn-secondary w-100">Print Bill</button>
-                      </a>
-                    </div>
-                </div>
+              <div class="row">
+                  <div class="col">
+                    <!-- Save Bill Modal -->
+                   <button type="button" class="btn btn-secondary w-100" data-bs-toggle="modal" data-bs-target="#saveBill">
+                      Save Bill
+                    </button>
+                  </div>
+                  <div class="col">
+                    <a href = "{% url 'saveAndPrint' %}">
+                      <button class="btn btn-secondary w-100">Print Bill</button>
+                    </a>
+                  </div>
+              </div>
 
-                <div class="card mt-1" style="background-color: #495DA7;">
-                  <div class="card-body">
-                    <div class="row m-0 p-0 border">
-                      <div class="col-2 border">
-                        <img
-                      src="../media/static/img/logo.webp"
-                      class="img-thumbnail mx-auto"
-                      style="width:75%; height: auto;"
-                  />
-                      </div>
-                      <div class="col">
-                        <!-- Charge Modal -->
-                      <button type="button" class="btn w-100" data-bs-toggle="modal" data-bs-target="#charge" style="color:white;">
-                        Charge Rp {{ total }}
-                      </button>
-                      </div>
+              <div class="card mt-1" style="background-color: #495DA7;">
+                <div class="card-body">
+                  <div class="row m-0 p-0">
+                    <div class="col-2">
+                      <img
+                    src="../media/static/img/logo.webp"
+                    class="img-thumbnail mx-auto"
+                    style="width:75%; height: auto;"
+                      />
                     </div>
-
+                    <div class="col">
+                      <!-- Charge Modal -->
+                    <button type="button" class="btn w-100" data-bs-toggle="modal" data-bs-target="#charge" data-bakcdrop="static" data-keyboard="false" style="color:white;">
+                      <h1>Charge Rp {{ total }}</h1>
+                    </button>
+                    </div>
                   </div>
                 </div>
+              </div>
 
             </div>
-
     </div>
 
 
@@ -208,15 +211,19 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Kirim Bill ini ke email kamu</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        ...
+        <form action="{% url 'saveBill' %}" method="POST">
+          {% csrf_token %}
+          <label for="email">Enter your email: </label>
+          <input type="email" name="email">
+          <button type="submit">Kirim</button>
+        </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
@@ -232,16 +239,20 @@
       </div>
 
       <div class="modal-body">
-        <form method="post" id="myForm">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <!-- UANG KEMBALIAN -->
-            {% if uangKembalian %}
-            <div class="alert alert-success">
-                Result: {{ uangKembalian}}
-            </div>
-            {% endif %}
-            <button type="submit" class="btn btn-primary" onClick="stayOpen()">Calculate</button>
+        <form id="myForm">
+          {% csrf_token %}
+          
+          <label for="totalCharge">Total Charge </label>
+          <input type="text" name="totalCharge" value="17000" id ="totalCharge">
+          <br>
+          <label for="uangPembeli">Uang Pembeli</label>
+          <input type="uangPembeli" name="uangPembeli" value="" id="uangPembeli">
+
+          <!-- UANG KEMBALIAN -->
+          <div class="alert alert-success" id ="result">
+                
+          </div>
+            <button type="submit" class="btn btn-primary" id="update-button">Calculate</button>
         </form>
 
       </div>
@@ -251,26 +262,31 @@
     </div>
   </div>
 </div>
-
-<!-- SCRIPT TO KEEP MODAL OPEN -->
-<script>
-    function stayOpen() {
-        event.preventDefault();
-        var form_data = $("#myForm").serialize();
-        $.ajax({
-            type: 'POST',
-            url: "{% url 'menu' %}",
-            data: form_data,
-            success: function (data) {
-                // Update the modal content with the result
-                $("#charge").html(data);
-                $("#charge").modal("show");
-            }
-        });
-    }
 </script>
 
+<!-- Calculate kembalian Function -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-  </body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+<script>
+  $("#myForm").submit(function (event){
+      event.preventDefault();
+      var totalCharge = $("#totalCharge").val();
+      var uangPembeli = $("#uangPembeli").val();
+
+      $.ajax({
+          url: '/hitungKembalian/',
+          type: 'POST',
+          headers: { "X-CSRFToken": '{{ csrf_token }}' },
+          data: {'totalCharge':totalCharge, 'uangPembeli':uangPembeli},
+          success: function (data) {
+              $("#result").html(data.result);
+          },
+          error: function(xhr, status, error) {
+          console.log(xhr.responseText);
+          }
+      });
+  })
+</script>
+
+</body>
 </html>
